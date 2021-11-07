@@ -240,6 +240,13 @@ class GLTFLoader extends Loader {
 
 	}
 
+	setBinPath( binPath ) {
+
+		this.binPath = binPath;
+		return this;
+
+	}
+
 	register( callback ) {
 
 		if ( this.pluginCallbacks.indexOf( callback ) === - 1 ) {
@@ -313,6 +320,7 @@ class GLTFLoader extends Loader {
 		const parser = new GLTFParser( json, {
 
 			path: path || this.resourcePath || '',
+			binPath: this.binPath || path || this.resourcePath || '',
 			crossOrigin: this.crossOrigin,
 			requestHeader: this.requestHeader,
 			manager: this.manager,
@@ -2627,7 +2635,7 @@ class GLTFParser {
 
 		return new Promise( function ( resolve, reject ) {
 
-			loader.load( LoaderUtils.resolveURL( bufferDef.uri, options.path ), resolve, undefined, function () {
+			loader.load( LoaderUtils.resolveURL( bufferDef.uri, options.binPath ), resolve, undefined, function () {
 
 				reject( new Error( 'THREE.GLTFLoader: Failed to load buffer "' + bufferDef.uri + '".' ) );
 
